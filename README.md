@@ -1,4 +1,4 @@
-# **social-quiz-app**
+# **Crunchy Food delivery**
 
 This is a social media/ quizzing application when a quiz master can create quiz banks and a Participator ( one who answers them ) can complete quizzes and increase his overall score to earn a badge.
 
@@ -13,6 +13,7 @@ This is a social media/ quizzing application when a quiz master can create quiz 
 <br/><br/>
 
 ## **Tech stack involved**
+
 1. Node
 2. Mongoose
 3. express
