@@ -1,19 +1,11 @@
 # **Crunchy Food delivery**
 
-This is a social media/ quizzing application when a quiz master can create quiz banks and a Participator ( one who answers them ) can complete quizzes and increase his overall score to earn a badge.
-
-<br/><br/>
-
-## **Users involved**
-
-1. Quiz Master
-2. Participator
-3. Admin who views all data
-
-<br/><br/>
+Crunchy is a food delivery spinof application of Swiggy.
+The aim is to create a performant web backend system application
 
 ## **Tech stack involved**
 
 1. Node
-2. Mongoose
+2. Postgres
 3. express
+4.
