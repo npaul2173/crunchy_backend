@@ -1,0 +1,52 @@
+import { NextFunction, Request, Response } from 'express';
+import { StatusCodes } from 'http-status-codes';
+import HttpException from 'utils/exception/http.exception';
+import { CuisineCreateProps } from './interface';
+import CuisineService from './service';
+
+class CuisineController {
+    public async createCuisine(
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ) {
+        const cuisineService = new CuisineService();
+        try {
+            const inputData = {
+                ...req.body,
+                isCuisineVerified: true,
+            } as CuisineCreateProps;
+
+            const response = await cuisineService.create(inputData);
+            res.status(StatusCodes.CREATED).json({ data: response });
+        } catch (error) {
+            next(
+                new HttpException(
+                    StatusCodes.BAD_REQUEST,
+                    '❌ Cannot Create Cuisine'
+                )
+            );
+        }
+    }
+
+    public async getAllCuisines(
+        _req: Request,
+        res: Response,
+        next: NextFunction
+    ) {
+        const cuisineService = new CuisineService();
+        try {
+            const response = await cuisineService.findAll();
+            res.status(StatusCodes.OK).json({ nodes: response });
+        } catch (error) {
+            next(
+                new HttpException(
+                    StatusCodes.BAD_REQUEST,
+                    '❌ Unable to retrieve cuisines'
+                )
+            );
+        }
+    }
+}
+
+export { CuisineController };

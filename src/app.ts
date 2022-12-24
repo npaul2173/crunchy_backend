@@ -4,22 +4,21 @@ import cors from 'cors';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import Logging from 'utils/library/logging';
-import { Controller } from 'utils/interfaces/controller';
-import { router } from 'routes/foods.router';
 import { sequel } from './models';
 import { customerRoutes } from 'routes/customer.router';
+import { cuisinesRoutes } from 'routes/cuisines.router';
 
 class App {
     public express: Application;
     public port: number;
 
-    constructor(port: number, controllers: Controller[]) {
+    constructor(port: number) {
         this.express = express();
         this.port = port;
 
         this.InitializeDatabaseConnection();
         this.InitializeMiddleware();
-        this.initializeControllers(controllers);
+        this.initializeControllers();
         this.initializeSwagger();
     }
 
@@ -33,13 +32,9 @@ class App {
         this.express.use(compression());
     }
 
-    private initializeControllers(controllers: Controller[]): void {
-        // controllers.forEach((controller: Controller) => {
-        //     this.express.use('/api', controller.router);
-        // });
-        // const foodController = new FoodController();
-        this.express.use('/api', router);
+    private initializeControllers(): void {
         this.express.use('/api', customerRoutes);
+        this.express.use('/api', cuisinesRoutes);
         this.express.get('/', (req, res, next) =>
             res
                 .status(200)
@@ -48,10 +43,6 @@ class App {
     }
 
     private InitializeDatabaseConnection(): void {
-        const { MONGO_USER, MONGO_PASSWORD, MONGO_PATH } = process.env;
-        Logging.info('Connected');
-
-        // set force to true to overwrite any existing tables - all data will be lost!
         try {
             sequel.sync({ force: false });
             Logging.info('Postgres Database  Connected 🔗');
@@ -61,11 +52,6 @@ class App {
                 error
             );
         }
-
-        // mongoose
-        //     .connect(`mongodb://${MONGO_PATH}`)
-        //     .then(() => Logging.info('Database  Connected 🔗'))
-        //     .catch((error) => console.log(error));
     }
 
     public listen(): void {
