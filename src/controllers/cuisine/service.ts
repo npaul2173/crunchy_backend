@@ -1,4 +1,5 @@
 import { CuisinesModel } from 'models/cuisine/model';
+import { Op } from 'sequelize';
 import { CuisineCreateProps } from './interface';
 
 class CuisineService {
@@ -13,8 +14,9 @@ class CuisineService {
 
     public findAll() {
         try {
-            const nodes = CuisinesModel.findAll();
-
+            const nodes = CuisinesModel.findAll({
+                where: { softDelete: { [Op.eq]: null } },
+            });
             return nodes;
         } catch (error) {
             throw new Error(

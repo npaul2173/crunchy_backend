@@ -18,4 +18,6 @@ router.post(
 // GET ALL CUISINES
 router.get(getRoute('/'), cuisineController.getAllCuisines);
 
+// SOFT DELETE CUISINE
+router.post(getRoute('/delete'), cuisineController.deleteCuisine);
 export { router as cuisinesRoutes };

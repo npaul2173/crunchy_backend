@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
+import { CuisinesModel } from 'models/cuisine/model';
 import HttpException from 'utils/exception/http.exception';
 import { CuisineCreateProps } from './interface';
 import CuisineService from './service';
@@ -24,6 +25,25 @@ class CuisineController {
                 new HttpException(
                     StatusCodes.BAD_REQUEST,
                     '❌ Cannot Create Cuisine'
+                )
+            );
+        }
+    }
+
+    public async deleteCuisine(
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ) {
+        const { id } = { ...req.body } as { id: string };
+        try {
+            const response = await CuisinesModel.destroy({ where: { id } });
+            res.status(StatusCodes.OK).json({ success: !!response });
+        } catch (error) {
+            next(
+                new HttpException(
+                    StatusCodes.BAD_REQUEST,
+                    '❌ Unable to retrieve cuisines'
                 )
             );
         }
