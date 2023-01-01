@@ -1,8 +1,10 @@
+import { DATABASE, HOST, PASSWORD, USER } from '@env';
+
 export const serverConfig = {
-    HOST: 'localhost',
-    USER: 'postgres',
-    PASSWORD: 'nabendu#321',
-    DB: 'testDb',
+    HOST: HOST,
+    USER: USER,
+    PASSWORD: PASSWORD,
+    DB: DATABASE,
     dialect: 'postgres',
     pool: {
         max: 5,
