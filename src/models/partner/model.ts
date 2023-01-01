@@ -10,6 +10,24 @@ PartnerModel.init(
             primaryKey: true,
             autoIncrement: true,
         },
+        regMobileNumber: {
+            type: DataTypes.STRING,
+        },
+        secondaryContactNumber: {
+            type: DataTypes.STRING,
+        },
+        email: {
+            type: DataTypes.STRING,
+        },
+        isMobileVerified: {
+            type: DataTypes.BOOLEAN,
+        },
+        isEmailVerified: {
+            type: DataTypes.BOOLEAN,
+        },
+        userType: {
+            type: DataTypes.STRING,
+        },
     },
     {
         sequelize: sequel,

@@ -7,6 +7,7 @@ import Logging from 'utils/library/logging';
 import { sequel } from './models';
 import { customerRoutes } from 'routes/customer.router';
 import { cuisinesRoutes } from 'routes/cuisines.router';
+import { userTypeRoutes } from 'routes/userTypes.router';
 
 class App {
     public express: Application;
@@ -33,8 +34,9 @@ class App {
     }
 
     private initializeControllers(): void {
-        this.express.use('/api', customerRoutes);
-        this.express.use('/api', cuisinesRoutes);
+        // this.express.use('/api', customerRoutes);
+        // this.express.use('/api', cuisinesRoutes);
+        // this.express.use('/api', userTypeRoutes);
         this.express.get('/', (req, res, next) =>
             res
                 .status(200)
