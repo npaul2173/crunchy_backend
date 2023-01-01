@@ -1,23 +1,24 @@
 import { DataTypes, Model } from 'sequelize';
 import { sequel } from '..';
 
-class UserTypesModel extends Model {}
+const MODEL = 'UserTypes';
 
-UserTypesModel.init(
+export const UserTypeModel = sequel.define(
+    MODEL,
     {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
         },
+
         userTypeName: {
             type: DataTypes.STRING,
         },
     },
     {
-        sequelize: sequel,
         timestamps: true,
+        paranoid: true,
+        deletedAt: 'softDelete',
     }
 );
-
-export { UserTypesModel };

@@ -34,9 +34,9 @@ class App {
     }
 
     private initializeControllers(): void {
-        // this.express.use('/api', customerRoutes);
-        // this.express.use('/api', cuisinesRoutes);
-        // this.express.use('/api', userTypeRoutes);
+        this.express.use('/api', customerRoutes);
+        this.express.use('/api', cuisinesRoutes);
+        this.express.use('/api', userTypeRoutes);
         this.express.get('/', (req, res, next) =>
             res
                 .status(200)

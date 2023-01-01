@@ -1,5 +1,5 @@
 import { createCuisineValidationSchema } from 'controllers/cuisine/validation';
-import { UserTypeController } from 'controllers/partnerTypes';
+import { UserTypeController } from 'controllers/userTypes';
 import { Router } from 'express';
 import { validate } from 'utils/library/validate';
 
