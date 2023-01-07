@@ -1,7 +1,7 @@
 interface CuisineProps {
     id: string;
     cuisineName: string;
-    isCuisineVerified: string;
+    isCuisineVerified: boolean;
 }
 
 export { CuisineProps };
