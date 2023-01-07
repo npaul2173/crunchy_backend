@@ -6,11 +6,15 @@ const requiredValidation = (column: string, name: string) => {
 
 const createCategoryValidationSchema = [
     requiredValidation('categoryName', 'categoryName')
-        .isLength({ min: 2 })
-        .withMessage('Minimum two characters required'),
+        .isString()
+        .withMessage('Category name should be a string'),
     requiredValidation('count', 'count')
         .isNumeric()
         .withMessage('Count should be a number'),
+    body('description')
+        .isString()
+        .withMessage('Description should be a string')
+        .optional(),
 ];
 
 export { createCategoryValidationSchema };

@@ -13,7 +13,7 @@ const createCategory = async (
     try {
         const inputData = req.body as CategoryCreateProps;
         const response = await categoryService.create(inputData);
-        res.status(StatusCodes.CREATED).json({ data: response });
+        res.status(StatusCodes.CREATED).json({ success: true, data: response });
     } catch (error) {
         next(
             new HttpException(
@@ -32,7 +32,7 @@ const getAllCategories = async (
     const categoryService = new CategoryService();
     try {
         const response = await categoryService.findAll();
-        res.status(StatusCodes.OK).json({ nodes: response });
+        res.status(StatusCodes.OK).json({ success: true, nodes: response });
     } catch (error) {
         next(
             new HttpException(
