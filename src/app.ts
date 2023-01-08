@@ -9,6 +9,7 @@ import { customerRoutes } from 'routes/customer.router';
 import { cuisinesRoutes } from 'routes/cuisines.router';
 import { userTypeRoutes } from 'routes/userTypes.router';
 import { PartnerRoutes } from 'routes/partner.router';
+import { categoryRoutes } from 'routes/categories.router';
 
 class App {
     public express: Application;
@@ -39,6 +40,7 @@ class App {
         this.express.use('/api', cuisinesRoutes);
         this.express.use('/api', userTypeRoutes);
         this.express.use('/api', PartnerRoutes);
+        this.express.use('/api', categoryRoutes);
         this.express.get('/', (req, res, next) =>
             res
                 .status(200)
