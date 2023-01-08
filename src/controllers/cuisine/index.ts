@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { CuisinesModel } from 'models/cuisine/model';
 import HttpException from 'utils/exception/http.exception';
+import Logging from 'utils/library/logging';
 import { CuisineCreateProps } from './interface';
 import CuisineService from './service';
 
@@ -17,9 +18,18 @@ class CuisineController {
                 ...req.body,
                 isCuisineVerified: true,
             } as CuisineCreateProps;
+            const node = await cuisineService.findCuisine(
+                inputData.cuisineName
+            );
 
-            const response = await cuisineService.create(inputData);
-            res.status(StatusCodes.CREATED).json({ data: response });
+            if (node !== null)
+                res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({
+                    message: 'Cuisine already exists!',
+                });
+            else {
+                const response = await cuisineService.create(inputData);
+                res.status(StatusCodes.CREATED).json({ data: response });
+            }
         } catch (error) {
             next(
                 new HttpException(

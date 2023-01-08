@@ -24,6 +24,18 @@ class CuisineService {
             );
         }
     }
+    public findCuisine(cuisineName: string) {
+        try {
+            const nodes = CuisinesModel.findOne({
+                where: { cuisineName: { [Op.eq]: cuisineName } },
+            });
+            return nodes;
+        } catch (error) {
+            throw new Error(
+                '❌ Some error occurred while retrieving 🖊️ cuisines '
+            );
+        }
+    }
 }
 
 export default CuisineService;
