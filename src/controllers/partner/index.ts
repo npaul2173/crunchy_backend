@@ -17,7 +17,6 @@ class PartnerController {
                 isEmailVerified: false,
                 isMobileVerified: false,
             } as Omit<PartnerProps, 'id'>;
-            Logging.warning(inputData);
             const customerResponse = await PartnerModel.create(inputData);
             res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
                 data: customerResponse,

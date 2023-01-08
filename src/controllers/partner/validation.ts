@@ -8,7 +8,7 @@ const createPartnerValidation = [
     requiredValidation('secondaryContactNumber', 'Secondary Contact Number'),
     requiredValidation('partnerName', 'Partner name'),
     requiredValidation('email', 'Email'),
-    requiredValidation('userTypeId', 'User Type'),
+    requiredValidation('roleId', 'User Type'),
 ];
 
 export { createPartnerValidation };

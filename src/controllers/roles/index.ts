@@ -1,11 +1,10 @@
 import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { UserTypesProps } from 'models/userTypes/interface';
-import { UserTypeModel } from 'models/userTypes/model';
+import { RoleProps } from 'models/role/interface';
+import { RoleModel } from 'models/role/model';
 import HttpException from 'utils/exception/http.exception';
-import Logging from 'utils/library/logging';
 
-class UserTypeController {
+class RoleController {
     public async createUserType(
         req: Request,
         res: Response,
@@ -14,10 +13,9 @@ class UserTypeController {
         try {
             const inputData = {
                 ...req.body,
-            } as Omit<UserTypesProps, 'id'>;
+            } as Omit<RoleProps, 'id'>;
 
-            Logging.warning({ inputData });
-            const response = await UserTypeModel.create(inputData);
+            const response = await RoleModel.create(inputData);
             res.status(StatusCodes.CREATED).json({ data: response });
         } catch (error) {
             next(
@@ -31,7 +29,7 @@ class UserTypeController {
 
     public async getAllUsers(_req: Request, res: Response, next: NextFunction) {
         try {
-            const response = await UserTypeModel.findAll();
+            const response = await RoleModel.findAll();
             res.status(StatusCodes.OK).json({ nodes: response });
         } catch (error) {
             next(
@@ -44,4 +42,4 @@ class UserTypeController {
     }
 }
 
-export { UserTypeController };
+export { RoleController };

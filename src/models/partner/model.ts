@@ -29,7 +29,7 @@ export const PartnerModel = sequel.define(
         isEmailVerified: {
             type: DataTypes.BOOLEAN,
         },
-        userTypeId: {
+        roleId: {
             type: DataTypes.INTEGER,
         },
     },

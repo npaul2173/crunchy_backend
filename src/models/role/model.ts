@@ -1,9 +1,9 @@
 import { DataTypes, Model } from 'sequelize';
 import { sequel } from '..';
 
-const MODEL = 'UserTypes';
+const MODEL = 'Role';
 
-export const UserTypeModel = sequel.define(
+export const RoleModel = sequel.define(
     MODEL,
     {
         id: {
@@ -12,7 +12,7 @@ export const UserTypeModel = sequel.define(
             autoIncrement: true,
         },
 
-        userTypeName: {
+        roleName: {
             type: DataTypes.STRING,
         },
     },

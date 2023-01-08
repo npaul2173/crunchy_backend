@@ -6,7 +6,7 @@ interface PartnerProps {
     email: string;
     isMobileVerified: boolean;
     isEmailVerified: boolean;
-    userTypeId: number;
+    roleId: number;
 }
 
 export { PartnerProps };

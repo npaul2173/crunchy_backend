@@ -1,21 +1,21 @@
 import { createCuisineValidationSchema } from 'controllers/cuisine/validation';
-import { UserTypeController } from 'controllers/userTypes';
+import { RoleController } from 'controllers/roles';
 import { Router } from 'express';
 import { validate } from 'utils/library/validate';
 
 const router = Router();
-const userTypeController = new UserTypeController();
-const getRoute = (uri?: string) => `/userTypes${uri}`;
+const roleController = new RoleController();
+const getRoute = (uri?: string) => `/roles${uri}`;
 
 // CREATE CUSTOMER
 router.post(
     getRoute('/create'),
     // createCuisineValidationSchema,
     // validate,
-    userTypeController.createUserType
+    roleController.createUserType
 );
 
 // GET ALL CUISINES
-router.get(getRoute('/'), userTypeController.getAllUsers);
+router.get(getRoute('/'), roleController.getAllUsers);
 
-export { router as userTypeRoutes };
+export { router as routerTypes };

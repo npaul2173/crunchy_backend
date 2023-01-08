@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { CuisinesModel } from 'models/cuisine/model';
 import HttpException from 'utils/exception/http.exception';
-import Logging from 'utils/library/logging';
 import { CuisineCreateProps } from './interface';
 import CuisineService from './service';
 
