@@ -23,14 +23,12 @@ class PartnerController {
                 data: customerResponse,
             });
         } catch (error) {
-            console.log(error);
-
-            // next(
-            //     new HttpException(
-            //         StatusCodes.BAD_REQUEST,
-            //         '❌ Cannot Create partner'
-            //     )
-            // );
+            next(
+                new HttpException(
+                    StatusCodes.BAD_REQUEST,
+                    '❌ Cannot Create partner'
+                )
+            );
         }
     }
 
