@@ -11,6 +11,8 @@ import { routerTypes } from 'routes/role.router';
 import { PartnerRoutes } from 'routes/partner.router';
 import { categoryRoutes } from 'routes/categories.router';
 import { RoleModel } from 'models/role/model';
+import fs from 'fs';
+import { sampleRouter } from 'routes/sample.route';
 
 class App {
     public express: Application;
@@ -43,6 +45,7 @@ class App {
         this.express.use('/api', routerTypes);
         this.express.use('/api', PartnerRoutes);
         this.express.use('/api', categoryRoutes);
+        this.express.use('/api', sampleRouter);
         this.express.get('/', (req, res, next) =>
             res
                 .status(200)

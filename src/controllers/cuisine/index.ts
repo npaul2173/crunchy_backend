@@ -4,8 +4,45 @@ import { CuisinesModel } from 'models/cuisine/model';
 import HttpException from 'utils/exception/http.exception';
 import { CuisineCreateProps } from './interface';
 import CuisineService from './service';
+import fs from 'fs';
+import { parse } from 'csv-parse';
+import Logging from 'utils/library/logging';
 
 class CuisineController {
+    public async cuisinesBulCreate(
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ) {
+        const cuisineService = new CuisineService();
+        try {
+            let dataArray: CuisineCreateProps[] = [];
+            const readableStream = fs.createReadStream(req.file?.path!);
+            readableStream
+                .pipe(parse({ delimiter: ',', from_line: 2 }))
+                .on('data', async (item) => {
+                    dataArray.push({
+                        cuisineName: item[0],
+                        isCuisineVerified: true,
+                    } as CuisineCreateProps);
+                })
+                .on('end', () => {
+                    Logging.info(dataArray);
+                    const response = cuisineService.createMultiple(dataArray);
+                    res.status(StatusCodes.CREATED).json({ data: response });
+                })
+                .on('error', (error) => {
+                    Logging.error(error.message);
+                });
+        } catch (error) {
+            next(
+                new HttpException(
+                    StatusCodes.BAD_REQUEST,
+                    '❌ Cannot Create Cuisine'
+                )
+            );
+        }
+    }
     public async createCuisine(
         req: Request,
         res: Response,
