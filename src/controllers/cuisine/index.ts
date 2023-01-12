@@ -26,9 +26,11 @@ class CuisineController {
                         isCuisineVerified: true,
                     } as CuisineCreateProps);
                 })
-                .on('end', () => {
+                .on('end', async () => {
                     Logging.info(dataArray);
-                    const response = cuisineService.createMultiple(dataArray);
+                    const response = await cuisineService.createMultiple(
+                        dataArray
+                    );
                     res.status(StatusCodes.CREATED).json({ data: response });
                 })
                 .on('error', (error) => {
