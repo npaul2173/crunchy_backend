@@ -36,7 +36,11 @@ const getAllRestaurants = async (
     const restaurantService = new RestaurantService();
     try {
         const response = await restaurantService.findAll();
-        res.status(StatusCodes.OK).json({ nodes: response });
+        res.status(StatusCodes.OK).json({
+            statusCode: StatusCodes.OK,
+            message: 'Restaurants fetched succesfully !',
+            data: response,
+        });
     } catch (error) {
         next(
             new HttpException(
