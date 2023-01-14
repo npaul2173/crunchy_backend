@@ -60,7 +60,11 @@ const deleteRestaurant = async (
     try {
         const { id } = { ...req.body } as { id: string };
         const response = await restaurantService.delete(id);
-        res.status(StatusCodes.OK).json({ data: response });
+        res.status(StatusCodes.OK).json({
+            statusCode: StatusCodes.OK,
+            message: 'Restaurant removed successfully !',
+            data: response,
+        });
     } catch (error) {
         next(
             new HttpException(

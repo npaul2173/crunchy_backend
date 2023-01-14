@@ -22,6 +22,6 @@ router.post(
 router.get(getRoute('/'), getAllRestaurants);
 
 //REMOVE RESTAURANT
-router.get(getRoute('/remove'), deleteRestaurant);
+router.post(getRoute('/remove'), deleteRestaurant);
 
 export { router as restaurantRoutes };
