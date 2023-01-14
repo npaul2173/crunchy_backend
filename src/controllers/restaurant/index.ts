@@ -15,7 +15,7 @@ const createRestaurant = async (
         const response = await restaurantService.create(inputData);
         res.status(StatusCodes.CREATED).json({
             statusCode: StatusCodes.CREATED,
-            message: 'Restaurant created succesfully',
+            message: 'Restaurant created successfully!',
             data: response,
         });
     } catch (error) {
@@ -38,7 +38,7 @@ const getAllRestaurants = async (
         const response = await restaurantService.findAll();
         res.status(StatusCodes.OK).json({
             statusCode: StatusCodes.OK,
-            message: 'Restaurants fetched succesfully !',
+            message: 'Restaurants fetched successfully !',
             data: response,
         });
     } catch (error) {
