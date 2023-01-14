@@ -10,9 +10,9 @@ export const CategoryModel = sequel.define(
             primaryKey: true,
             autoIncrement: true,
         },
-        categoryName: { type: DataTypes.STRING },
+        categoryName: { type: DataTypes.STRING, allowNull: false },
         description: { type: DataTypes.STRING },
-        count: { type: DataTypes.INTEGER },
+        count: { type: DataTypes.INTEGER, allowNull: false },
     },
     {
         timestamps: true,
