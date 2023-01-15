@@ -1,18 +1,41 @@
-import { DataTypes, Model } from 'sequelize';
+import { DataTypes } from 'sequelize';
 import { sequel } from '..';
 
-class PartnerModel extends Model {}
+const MODEL: string = 'partner';
 
-PartnerModel.init(
+export const PartnerModel = sequel.define(
+    MODEL,
     {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
         },
+        partnerName: {
+            type: DataTypes.STRING,
+        },
+        regMobileNumber: {
+            type: DataTypes.STRING,
+        },
+        secondaryContactNumber: {
+            type: DataTypes.STRING,
+        },
+        email: {
+            type: DataTypes.STRING,
+        },
+        isMobileVerified: {
+            type: DataTypes.BOOLEAN,
+        },
+        isEmailVerified: {
+            type: DataTypes.BOOLEAN,
+        },
+        roleId: {
+            type: DataTypes.INTEGER,
+        },
     },
     {
-        sequelize: sequel,
         timestamps: true,
+        paranoid: true,
+        deletedAt: 'softDelete',
     }
 );

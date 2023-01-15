@@ -8,6 +8,12 @@ import { sequel } from './models';
 import { customerRoutes } from 'routes/customer.router';
 import { cuisinesRoutes } from 'routes/cuisines.router';
 import { restaurantRoutes } from 'routes/restaurant.router';
+import { routerTypes } from 'routes/role.router';
+import { PartnerRoutes } from 'routes/partner.router';
+import { categoryRoutes } from 'routes/categories.router';
+import { RoleModel } from 'models/role/model';
+import fs from 'fs';
+import { sampleRouter } from 'routes/sample.route';
 
 class App {
     public express: Application;
@@ -21,6 +27,7 @@ class App {
         this.InitializeMiddleware();
         this.initializeControllers();
         this.initializeSwagger();
+        this.initializeData();
     }
 
     private initializeSwagger(): void {}
@@ -37,6 +44,10 @@ class App {
         this.express.use('/api', customerRoutes);
         this.express.use('/api', cuisinesRoutes);
         this.express.use('/api', restaurantRoutes);
+        this.express.use('/api', routerTypes);
+        this.express.use('/api', PartnerRoutes);
+        this.express.use('/api', categoryRoutes);
+        this.express.use('/api', sampleRouter);
         this.express.get('/', (req, res, next) =>
             res
                 .status(200)
@@ -59,6 +70,27 @@ class App {
     public listen(): void {
         this.express.listen(this.port, () => {
             Logging.info(`App listening on the port ${this.port} 🤞`);
+        });
+    }
+
+    private initializeData(): void {
+        RoleModel.sync().then(() => {
+            RoleModel.upsert({
+                id: 1,
+                roleName: 'Admin',
+            });
+            RoleModel.upsert({
+                id: 2,
+                roleName: 'Owner',
+            });
+            RoleModel.upsert({
+                id: 3,
+                roleName: 'Manager',
+            });
+            RoleModel.upsert({
+                id: 4,
+                roleName: 'Customer',
+            });
         });
     }
 }

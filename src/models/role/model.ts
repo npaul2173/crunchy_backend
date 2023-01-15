@@ -1,9 +1,9 @@
-import { DataTypes } from 'sequelize';
+import { DataTypes, Model } from 'sequelize';
 import { sequel } from '..';
 
-const MODEL: string = 'cuisine';
+const MODEL = 'Role';
 
-export const CuisinesModel = sequel.define(
+export const RoleModel = sequel.define(
     MODEL,
     {
         id: {
@@ -11,12 +11,9 @@ export const CuisinesModel = sequel.define(
             primaryKey: true,
             autoIncrement: true,
         },
-        cuisineName: {
-            type: DataTypes.STRING,
-        },
 
-        isCuisineVerified: {
-            type: DataTypes.BOOLEAN,
+        roleName: {
+            type: DataTypes.STRING,
         },
     },
     {
