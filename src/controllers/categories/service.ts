@@ -1,4 +1,5 @@
 import { CategoryModel } from 'models/category/model';
+import { DerivedProductModel, ProductModel } from 'models/product/model';
 import { CategoryCreateProps } from './interface';
 
 class CategoryService {
@@ -24,7 +25,11 @@ class CategoryService {
     }
     public findAll() {
         try {
-            const nodes = CategoryModel.findAll();
+            const nodes = CategoryModel.findAll({
+                include: [
+                    { model: ProductModel, include: [DerivedProductModel] },
+                ],
+            });
             return nodes;
         } catch (error) {
             throw new Error(
