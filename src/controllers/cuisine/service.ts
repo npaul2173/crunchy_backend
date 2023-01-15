@@ -12,6 +12,15 @@ class CuisineService {
         }
     }
 
+    public async createMultiple(data: CuisineCreateProps[]) {
+        try {
+            const customerResponse = CuisinesModel.bulkCreate(data);
+            return customerResponse;
+        } catch (error) {
+            throw new Error('❌ Unable to create 🖊️ cuisine ');
+        }
+    }
+
     public findAll() {
         try {
             const nodes = CuisinesModel.findAll({

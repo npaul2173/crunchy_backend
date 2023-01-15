@@ -13,7 +13,17 @@ const createCategory = async (
     try {
         const inputData = req.body as CategoryCreateProps;
         const response = await categoryService.create(inputData);
-        res.status(StatusCodes.CREATED).json({ success: true, data: response });
+        if (response) {
+            res.status(StatusCodes.CREATED).json({
+                success: true,
+                data: response,
+            });
+        } else {
+            res.status(StatusCodes.CONFLICT).json({
+                success: false,
+                message: 'Category already exists',
+            });
+        }
     } catch (error) {
         next(
             new HttpException(
