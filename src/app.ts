@@ -7,10 +7,12 @@ import Logging from 'utils/library/logging';
 import { sequel } from './models';
 import { customerRoutes } from 'routes/customer.router';
 import { cuisinesRoutes } from 'routes/cuisines.router';
+import { restaurantRoutes } from 'routes/restaurant.router';
 import { routerTypes } from 'routes/role.router';
 import { PartnerRoutes } from 'routes/partner.router';
 import { categoryRoutes } from 'routes/categories.router';
 import { RoleModel } from 'models/role/model';
+import { productRoutes } from 'routes/product.router';
 import fs from 'fs';
 import { sampleRouter } from 'routes/sample.route';
 import { uploadRoutes } from 'routes/file.upload.router';
@@ -43,9 +45,11 @@ class App {
     private initializeControllers(): void {
         this.express.use('/api', customerRoutes);
         this.express.use('/api', cuisinesRoutes);
+        this.express.use('/api', restaurantRoutes);
         this.express.use('/api', routerTypes);
         this.express.use('/api', PartnerRoutes);
         this.express.use('/api', categoryRoutes);
+        this.express.use('/api', productRoutes);
         this.express.use('/api', sampleRouter);
         this.express.use('/api', uploadRoutes);
         this.express.get('/', (req, res, next) =>
