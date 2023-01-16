@@ -1,3 +1,4 @@
+import { ProductModel } from 'models/product/model';
 import { DataTypes } from 'sequelize';
 import { sequel } from '..';
 
@@ -18,3 +19,5 @@ export const CategoryModel = sequel.define(
         timestamps: true,
     }
 );
+
+CategoryModel.hasMany(ProductModel);
