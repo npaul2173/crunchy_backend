@@ -15,6 +15,7 @@ import { RoleModel } from 'models/role/model';
 import { productRoutes } from 'routes/product.router';
 import fs from 'fs';
 import { sampleRouter } from 'routes/sample.route';
+import { uploadRoutes } from 'routes/file.upload.router';
 
 class App {
     public express: Application;
@@ -50,6 +51,7 @@ class App {
         this.express.use('/api', categoryRoutes);
         this.express.use('/api', productRoutes);
         this.express.use('/api', sampleRouter);
+        this.express.use('/api', uploadRoutes);
         this.express.get('/', (req, res, next) =>
             res
                 .status(200)

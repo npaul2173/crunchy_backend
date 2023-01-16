@@ -1,8 +1,8 @@
 export const serverConfig = {
-    HOST: 'localhost',
-    USER: 'postgres',
-    PASSWORD: 'sumit@321',
-    DB: 'testDb',
+    HOST: process.env.HOST!,
+    USER: process.env.USERNAME!,
+    DB: process.env.DB,
+    PASSWORD: process.env.PASSWORD!,
     dialect: 'postgres',
     pool: {
         max: 5,
