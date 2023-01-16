@@ -61,7 +61,7 @@ class App {
 
     private InitializeDatabaseConnection(): void {
         try {
-            sequel.sync({ force: false });
+            sequel.sync({ force: false, alter: true });
             Logging.info('Postgres Database  Connected 🔗');
         } catch (error) {
             console.error(
