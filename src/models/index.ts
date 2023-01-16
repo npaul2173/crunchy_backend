@@ -2,9 +2,9 @@ import { serverConfig } from 'config/database';
 import { Sequelize } from 'sequelize';
 
 const sequel: Sequelize = new Sequelize(
-    serverConfig.DB,
-    serverConfig.USER,
-    serverConfig.PASSWORD,
+    serverConfig.DB!,
+    serverConfig.USER!,
+    serverConfig.PASSWORD!,
     {
         host: serverConfig.HOST,
         dialect: 'postgres', //  needs to come from actual serverConfig;
