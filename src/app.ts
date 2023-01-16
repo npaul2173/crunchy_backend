@@ -14,7 +14,7 @@ import { categoryRoutes } from 'routes/categories.router';
 import { RoleModel } from 'models/role/model';
 import { productRoutes } from 'routes/product.router';
 import fs from 'fs';
-import { sampleRouter } from 'routes/sample.route';
+import { sampleRouter } from 'routes/csv.route';
 import { uploadRoutes } from 'routes/file.upload.router';
 
 class App {
