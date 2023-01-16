@@ -1,7 +1,7 @@
 export const serverConfig = {
     HOST: 'localhost',
     USER: 'postgres',
-    PASSWORD: 'nabendu#321',
+    PASSWORD: 'sumit@321',
     DB: 'testDb',
     dialect: 'postgres',
     pool: {
