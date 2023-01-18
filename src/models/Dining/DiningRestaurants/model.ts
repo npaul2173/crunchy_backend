@@ -1,9 +1,10 @@
+import { sequel } from 'models/index';
 import { ProductModel } from 'models/product/model';
 import { DataTypes } from 'sequelize';
-import { sequel } from '..';
 
-const MODEL_NAME: string = 'category';
-export const CategoryModel = sequel.define(
+const MODEL_NAME: string = 'diningRestaurant';
+
+export const DiningRestaurantModel = sequel.define(
     MODEL_NAME,
     {
         id: {
@@ -11,13 +12,23 @@ export const CategoryModel = sequel.define(
             primaryKey: true,
             autoIncrement: true,
         },
-        categoryName: { type: DataTypes.STRING, allowNull: false },
-        description: { type: DataTypes.STRING },
-        count: { type: DataTypes.INTEGER, allowNull: false },
+        photos: { type: DataTypes.STRING },
+        restaurantName: { type: DataTypes.STRING, allowNull: false },
+        street: { type: DataTypes.STRING },
+        state: { type: DataTypes.STRING },
+        landmark: { type: DataTypes.STRING },
+        city: { type: DataTypes.STRING },
+        pincode: { type: DataTypes.STRING },
+        pocketPinch: { type: DataTypes.STRING },
+        contactNumber: { type: DataTypes.STRING },
+        alternateContact: { type: DataTypes.STRING },
+        popularDishes: { type: DataTypes.STRING },
+        features: { type: DataTypes.STRING },
+        menu: { type: DataTypes.STRING },
     },
     {
         timestamps: true,
+        paranoid: true,
+        deletedAt: 'inActive',
     }
 );
-
-CategoryModel.hasMany(ProductModel);

@@ -16,6 +16,7 @@ import { productRoutes } from 'routes/product.router';
 import fs from 'fs';
 import { sampleRouter } from 'routes/csv.route';
 import { uploadRoutes } from 'routes/file.upload.router';
+import { diningRestaurantRoutes } from 'routes/dining.restaurant.router';
 
 class App {
     public express: Application;
@@ -52,6 +53,10 @@ class App {
         this.express.use('/api', productRoutes);
         this.express.use('/api', sampleRouter);
         this.express.use('/api', uploadRoutes);
+
+        // DINING
+        this.express.use('/api', diningRestaurantRoutes);
+
         this.express.get('/', (req, res, next) =>
             res
                 .status(200)

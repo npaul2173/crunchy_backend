@@ -7,11 +7,11 @@ interface DiningRestaurantProps {
     state: string;
     city: string;
     pincode: string;
-    menu: string;
+    menu?: string;
     contactNumber: string;
-    alternateContact: string;
-    popularDishes: string[];
-    features: string;
+    alternateContact?: string;
+    popularDishes?: string[];
+    features?: string;
     pocketPinch?: number;
 }
 
