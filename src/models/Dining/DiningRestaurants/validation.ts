@@ -14,6 +14,7 @@ const createDiningRestaurantValidationSchema = [
         .withMessage('Minimum ten digits required'),
 ];
 
+// Function to validate file
 const validateFile = (req: Request, res: Response, next: NextFunction) => {
     console.log();
 

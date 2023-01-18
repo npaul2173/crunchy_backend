@@ -4,10 +4,7 @@ import { validate } from 'utils/library/validate';
 import os from 'os';
 import { BaseRoute } from 'utils/library/utils';
 import DiningRestaurantController from 'controllers/Dining/Restaurants';
-import {
-    validateFile,
-    createDiningRestaurantValidationSchema,
-} from 'models/Dining/DiningRestaurants/validation';
+import { createDiningRestaurantValidationSchema } from 'models/Dining/DiningRestaurants/validation';
 import { StatusCodes } from 'http-status-codes';
 
 const router = Router();
@@ -23,13 +20,6 @@ router.post(
 
     createDiningRestaurantValidationSchema,
     validate,
-    // function (req: any, res: any) {
-    //     res.status(StatusCodes.OK).send({
-    //         message: 'Receivedadas',
-    //         file: req.file?.mimetype,
-    //     });
-    // }
-
     controller.createDiningRestaurant
 );
 
