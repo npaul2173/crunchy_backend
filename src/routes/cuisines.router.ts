@@ -4,29 +4,37 @@ import { Router } from 'express';
 import multer from 'multer';
 import { validate } from 'utils/library/validate';
 import os from 'os';
+import { BaseRoute } from 'utils/library/utils';
 
 const router = Router();
 const cuisineController = new CuisineController();
-const getRoute = (uri?: string) => `/cuisines${uri}`;
+
 const upload = multer({ dest: os.tmpdir() });
+const bRoute = new BaseRoute('cuisines');
+const create = bRoute.getRoute('/create');
+const bulCreate = bRoute.getRoute('/bulkCreate');
+const getAll = bRoute.getRoute('/');
+const deleteSingle = bRoute.getRoute('/delete');
+
+console.log('bRoute ----> \n\n\n', { bRoute });
 
 // CREATE CUSTOMER
 router.post(
-    getRoute('/create'),
+    create,
     createCuisineValidationSchema,
     validate,
     cuisineController.createCuisine
 );
 
 router.post(
-    getRoute('/bulkCreate'),
+    bulCreate,
     upload.single('csvFile'),
     cuisineController.cuisinesBulCreate
 );
 
 // GET ALL CUISINES
-router.get(getRoute('/'), cuisineController.getAllCuisines);
+router.get(getAll, cuisineController.getAllCuisines);
 
 // SOFT DELETE CUISINE
-router.post(getRoute('/delete'), cuisineController.deleteCuisine);
+router.post(deleteSingle, cuisineController.deleteCuisine);
 export { router as cuisinesRoutes };
