@@ -27,7 +27,6 @@ class CuisineController {
                     } as CuisineCreateProps);
                 })
                 .on('end', async () => {
-                    Logging.info(dataArray);
                     const response = await cuisineService.createMultiple(
                         dataArray
                     );

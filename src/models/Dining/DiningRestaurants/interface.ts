@@ -1,7 +1,6 @@
 interface DiningRestaurantProps {
     id: String;
     restaurantName: string;
-    photos: string[];
     street: string;
     landmark: string;
     state: string;
