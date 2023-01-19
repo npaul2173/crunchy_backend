@@ -16,26 +16,26 @@ const bRoute = new BaseRoute('diningRestaurant');
 // CREATE CUSTOMER
 router.post(
     bRoute.getRoute('/create'),
-    upload.single('photos'),
-
+    // upload.single('photos'),
+    upload.array('photos', 5),
     createDiningRestaurantValidationSchema,
     validate,
     controller.createDiningRestaurant
 );
 
-router.post(
-    bRoute.getRoute('/stats'),
-    upload.single('uploaded_file'),
-    function (req, res) {
-        res.status(StatusCodes.OK).send({
-            message: 'Received',
-            file: req.file?.mimetype,
-        });
-    }
-);
+// router.post(
+//     bRoute.getRoute('/stats'),
+//     upload.single('uploaded_file'),
+//     function (req, res) {
+//         res.status(StatusCodes.OK).send({
+//             message: 'Received',
+//             file: req.file?.mimetype,
+//         });
+//     }
+// );
 
 // GET ALL CUISINES
-// router.get(getRoute('/'), controller.getAllCuisines);
+router.get(bRoute.getRoute('/'), controller.getAll);
 
 // SOFT DELETE CUISINE
 // router.post(getRoute('/delete'), controller.deleteCuisine);

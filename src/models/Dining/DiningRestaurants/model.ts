@@ -1,6 +1,7 @@
 import { sequel } from 'models/index';
 import { ProductModel } from 'models/product/model';
 import { DataTypes } from 'sequelize';
+import { DiningImagesModel } from './Image/model';
 
 const MODEL_NAME: string = 'diningRestaurant';
 
@@ -12,7 +13,6 @@ export const DiningRestaurantModel = sequel.define(
             primaryKey: true,
             autoIncrement: true,
         },
-        photos: { type: DataTypes.STRING },
         restaurantName: { type: DataTypes.STRING, allowNull: false },
         street: { type: DataTypes.STRING },
         state: { type: DataTypes.STRING },
@@ -32,3 +32,5 @@ export const DiningRestaurantModel = sequel.define(
         deletedAt: 'inActive',
     }
 );
+
+DiningRestaurantModel.hasMany(DiningImagesModel);
