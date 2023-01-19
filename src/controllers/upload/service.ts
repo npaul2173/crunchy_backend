@@ -23,7 +23,7 @@ class UploadService {
                 if (s3Err) {
                     reject(s3Err);
                 }
-                console.log(`File uploaded successfully at ${data.Location}`);
+                Logging.info(`File uploaded successfully at ${data.Location}`);
                 resolve(data.Location);
             });
         });

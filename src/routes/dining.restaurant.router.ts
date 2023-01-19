@@ -5,7 +5,7 @@ import os from 'os';
 import { BaseRoute } from 'utils/library/utils';
 import DiningRestaurantController from 'controllers/Dining/Restaurants';
 import { createDiningRestaurantValidationSchema } from 'models/Dining/DiningRestaurants/validation';
-import { StatusCodes } from 'http-status-codes';
+import { validateMultipleImage } from 'controllers/upload/validate';
 
 const router = Router();
 const controller = new DiningRestaurantController();
@@ -16,10 +16,10 @@ const bRoute = new BaseRoute('diningRestaurant');
 // CREATE CUSTOMER
 router.post(
     bRoute.getRoute('/create'),
-    // upload.single('photos'),
-    upload.array('photos', 5),
+    upload.array('photos', 10),
     createDiningRestaurantValidationSchema,
     validate,
+    validateMultipleImage,
     controller.createDiningRestaurant
 );
 
@@ -37,6 +37,4 @@ router.post(
 // GET ALL CUISINES
 router.get(bRoute.getRoute('/'), controller.getAll);
 
-// SOFT DELETE CUISINE
-// router.post(getRoute('/delete'), controller.deleteCuisine);
 export { router as diningRestaurantRoutes };
