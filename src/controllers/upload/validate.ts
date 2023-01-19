@@ -25,7 +25,7 @@ const validateMultipleImage = (
     next: NextFunction
 ) => {
     const expectedFileType = ['png', 'jpg', 'jpeg'];
-    if (!req.files || req.files.length < 5 || req.files.length > 10)
+    if (!req.files || req.files.length < 1 || req.files.length > 10)
         return res.json({
             success: false,
             message: 'Minimum 5 Images required, max 10',
