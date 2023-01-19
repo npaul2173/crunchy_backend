@@ -5,8 +5,14 @@ import { CuisineCreateProps } from './interface';
 class CuisineService {
     public async create(data: CuisineCreateProps) {
         try {
-            const customerResponse = CuisinesModel.create(data);
-            return customerResponse;
+            const [customerResponse, created] =
+                await CuisinesModel.findOrCreate({
+                    where: {
+                        cuisineName: data.cuisineName,
+                    },
+                    defaults: { ...data },
+                });
+            return { customerResponse, created };
         } catch (error) {
             throw new Error('❌ Unable to create 🖊️ cuisine ');
         }

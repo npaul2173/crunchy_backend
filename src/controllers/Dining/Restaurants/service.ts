@@ -1,6 +1,7 @@
 import { UploadPaths } from 'controllers/upload/enums';
 import UploadService from 'controllers/upload/service';
 import { Request } from 'express';
+import { CuisinesModel } from 'models/cuisine/model';
 import { DiningImagesModel } from 'models/Dining/DiningRestaurants/Image/model';
 import { DiningRestaurantModel } from 'models/Dining/DiningRestaurants/model';
 import { Multer } from 'multer';
@@ -32,7 +33,7 @@ class DiningRestaurantService {
                     await DiningRestaurantModel.findOrCreate({
                         where: { restaurantName: data.restaurantName },
                         defaults: { ...data, diningImages },
-                        include: [DiningImagesModel],
+                        include: [DiningImagesModel, CuisinesModel],
                     });
                 return { created: created, response };
             } catch (error) {

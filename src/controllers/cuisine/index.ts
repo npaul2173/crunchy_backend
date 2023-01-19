@@ -64,8 +64,13 @@ class CuisineController {
                     message: 'Cuisine already exists!',
                 });
             else {
-                const response = await cuisineService.create(inputData);
-                res.status(StatusCodes.CREATED).json({ data: response });
+                const { created, customerResponse } =
+                    await cuisineService.create(inputData);
+                res.status(StatusCodes.CREATED).json({
+                    data: customerResponse,
+                    created,
+                    status: true,
+                });
             }
         } catch (error) {
             next(

@@ -18,7 +18,6 @@ class UploadService {
                 Key: `${uploadPath}Restaurants_${timestamp}.jpg`,
                 Body: fileContent,
             };
-            Logging.warning({ params });
             s3.upload(params, function (s3Err, data) {
                 if (s3Err) {
                     reject(s3Err);
