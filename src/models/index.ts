@@ -16,7 +16,7 @@ const sequel: Sequelize = new Sequelize(
             acquire: serverConfig.pool.acquire,
             idle: serverConfig.pool.idle,
         },
-        logging: false,
+        logging: true,
     }
 );
 
