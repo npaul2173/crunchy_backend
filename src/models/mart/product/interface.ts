@@ -5,6 +5,7 @@ interface ProductProps {
     price: Number;
     quantity?: Number;
     categoryId: Number;
+    images: string[];
 }
 
 export { ProductProps };

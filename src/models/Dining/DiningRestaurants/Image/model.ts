@@ -1,5 +1,4 @@
 import { sequel } from 'models/index';
-import { ProductModel } from 'models/product/model';
 import { DataTypes } from 'sequelize';
 
 const MODEL_NAME: string = 'diningImages';

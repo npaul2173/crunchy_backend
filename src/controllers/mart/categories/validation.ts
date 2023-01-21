@@ -11,6 +11,9 @@ const createCategoryValidationSchema = [
     requiredValidation('count', 'count')
         .isNumeric()
         .withMessage('Count should be a number'),
+    requiredValidation('image', 'image')
+        .isString()
+        .withMessage('Image should be a string'),
     body('description')
         .isString()
         .withMessage('Description should be a string')

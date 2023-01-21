@@ -3,6 +3,7 @@ interface CategoryProps {
     categoryName: String;
     description?: String;
     count: Number;
+    image: string;
 }
 
 export { CategoryProps };

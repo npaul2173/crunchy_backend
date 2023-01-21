@@ -1,5 +1,5 @@
-import { createCategory, getAllCategories } from 'controllers/categories';
-import { createCategoryValidationSchema } from 'controllers/categories/validation';
+import { createCategory, getAllCategories } from 'controllers/mart/categories';
+import { createCategoryValidationSchema } from 'controllers/mart/categories/validation';
 import { Router } from 'express';
 import { BaseRoute } from 'utils/library/utils';
 import { validate } from 'utils/library/validate';

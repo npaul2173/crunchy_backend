@@ -1,5 +1,5 @@
-import { createProduct, getAllProducts } from 'controllers/product';
-import { createProductValidationSchema } from 'controllers/product/validation';
+import { createProduct, getAllProducts } from 'controllers/mart/product';
+import { createProductValidationSchema } from 'controllers/mart/product/validation';
 import { Router } from 'express';
 import { validate } from 'utils/library/validate';
 

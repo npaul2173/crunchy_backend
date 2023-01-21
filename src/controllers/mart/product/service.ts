@@ -1,5 +1,9 @@
-import { CategoryModel } from 'models/category/model';
-import { DerivedProductModel, ProductModel } from 'models/product/model';
+import { CategoryModel } from 'models/mart/category/model';
+import {
+    DerivedProductModel,
+    ProductImageModel,
+    ProductModel,
+} from 'models/mart/product/model';
 import Logging from 'utils/library/logging';
 import { ProductCreateProps } from './interface';
 
@@ -14,12 +18,23 @@ class ProductService {
                     where: {
                         productName: data.productName,
                     },
-                    defaults: {
-                        ...data,
-                    },
+                    defaults: { ...data, images: undefined },
                 });
+                Logging.info(product);
+                Logging.info(created);
+
                 if (created) {
-                    return product;
+                    const imageResponse = await ProductImageModel.create({
+                        images: data.images,
+                        productId: product.dataValues.id,
+                    });
+
+                    Logging.info(imageResponse);
+                    product;
+                    return {
+                        ...product.dataValues,
+                        images: imageResponse.dataValues.images,
+                    };
                 } else if (
                     product.dataValues.price !== data.price &&
                     product.dataValues.price !== data.quantity
@@ -53,7 +68,10 @@ class ProductService {
     public findAll() {
         try {
             const nodes = ProductModel.findAll({
-                include: [DerivedProductModel],
+                include: [
+                    { model: DerivedProductModel },
+                    { model: ProductImageModel, attributes: ['images'] },
+                ],
             });
             return nodes;
         } catch (error) {

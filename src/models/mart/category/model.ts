@@ -1,6 +1,6 @@
-import { ProductModel } from 'models/product/model';
+import { ProductModel } from 'models/mart/product/model';
 import { DataTypes } from 'sequelize';
-import { sequel } from '..';
+import { sequel } from '../..';
 
 const MODEL_NAME: string = 'category';
 export const CategoryModel = sequel.define(
@@ -14,9 +14,12 @@ export const CategoryModel = sequel.define(
         categoryName: { type: DataTypes.STRING, allowNull: false },
         description: { type: DataTypes.STRING },
         count: { type: DataTypes.INTEGER, allowNull: false },
+        image: { type: DataTypes.STRING, allowNull: false },
     },
     {
         timestamps: true,
+        paranoid: true,
+        deletedAt: 'softDelete',
     }
 );
 
