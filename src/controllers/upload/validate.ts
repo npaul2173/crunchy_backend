@@ -28,7 +28,7 @@ const validateMultipleImage = (
     if (!req.files || req.files.length < 1 || req.files.length > 10)
         return res.json({
             success: false,
-            message: 'Minimum 5 Images required, max 10',
+            message: 'Minimum 1 Images required, max 10',
         });
 
     const files: any = req.files;

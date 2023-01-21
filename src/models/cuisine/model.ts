@@ -1,10 +1,10 @@
 import { DataTypes } from 'sequelize';
 import { sequel } from '..';
 
-const MODEL: string = 'cuisine';
+export const CUISINE_MODEL: string = 'cuisine';
 
 export const CuisinesModel = sequel.define(
-    MODEL,
+    CUISINE_MODEL,
     {
         id: {
             type: DataTypes.INTEGER,

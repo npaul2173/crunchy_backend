@@ -32,9 +32,13 @@ class DiningRestaurantService {
                 const [response, created] =
                     await DiningRestaurantModel.findOrCreate({
                         where: { restaurantName: data.restaurantName },
-                        defaults: { ...data, diningImages },
-                        include: [DiningImagesModel, CuisinesModel],
+                        defaults: {
+                            ...data,
+                            diningImages,
+                        },
+                        include: [DiningImagesModel],
                     });
+
                 return { created: created, response };
             } catch (error) {
                 throw new Error('❌ Unable to create 🖊️ Dining Restaurant');
