@@ -1,30 +1,19 @@
-import { CuisinesModel } from 'models/cuisine/model';
+import { CuisinesModel, CUISINE_MODEL } from 'models/cuisine/model';
 import { sequel } from 'models/index';
 import { DataTypes } from 'sequelize';
-import { DiningRestaurantModel } from '../model';
+import { DiningRestaurantModel, DINING_RESTAURANT_MODEL } from '../model';
 
-const MODEL_NAME: string = 'diningCuisines';
+const DINING_CUISINE_MODEL: string = 'diningCuisines';
 
-export const DiningCuisinesModel = sequel.define(MODEL_NAME, {
-    diningRestaurantId: {
-        type: DataTypes.INTEGER,
-        references: {
-            model: DiningRestaurantModel,
-            key: 'id',
-        },
-    },
-    cuisineId: {
-        type: DataTypes.INTEGER,
-        references: {
-            model: CuisinesModel,
-            key: 'id',
-        },
-    },
-});
+export const DiningCuisinesModel = sequel.define(DINING_CUISINE_MODEL, {});
 
 DiningRestaurantModel.belongsToMany(CuisinesModel, {
-    through: 'diningCuisines',
+    through: DINING_CUISINE_MODEL,
+    as: CUISINE_MODEL,
+    foreignKey: 'diningRestaurantId',
 });
 CuisinesModel.belongsToMany(DiningRestaurantModel, {
-    through: 'diningCuisines',
+    through: DINING_CUISINE_MODEL,
+    as: DINING_RESTAURANT_MODEL,
+    foreignKey: 'cuisineId',
 });

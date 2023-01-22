@@ -3,10 +3,10 @@ import { ProductModel } from 'models/product/model';
 import { DataTypes } from 'sequelize';
 import { DiningImagesModel } from './Image/model';
 
-const MODEL_NAME: string = 'diningRestaurant';
+export const DINING_RESTAURANT_MODEL: string = 'diningRestaurant';
 
 export const DiningRestaurantModel = sequel.define(
-    MODEL_NAME,
+    DINING_RESTAURANT_MODEL,
     {
         id: {
             type: DataTypes.INTEGER,
