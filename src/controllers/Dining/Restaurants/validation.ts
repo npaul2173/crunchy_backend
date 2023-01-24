@@ -14,4 +14,18 @@ const createDiningRestaurantValidationSchema = [
         .withMessage('Minimum ten digits required'),
 ];
 
-export { createDiningRestaurantValidationSchema };
+const updatePopularDishesValidationSchema = [
+    requiredValidation('popularDishes', 'Popular dishes')
+        .isArray()
+        .custom((item) => {
+            const isStringsArray = item.every(
+                (i: any) => typeof i === 'string'
+            );
+            return isStringsArray;
+        }),
+    requiredValidation('id', 'Restaurant id'),
+];
+export {
+    createDiningRestaurantValidationSchema,
+    updatePopularDishesValidationSchema,
+};

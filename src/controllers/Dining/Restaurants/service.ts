@@ -5,7 +5,13 @@ import { CuisinesModel } from 'models/cuisine/model';
 import { DiningImagesModel } from 'models/Dining/DiningRestaurants/Image/model';
 import { DiningRestaurantModel } from 'models/Dining/DiningRestaurants/model';
 import { Multer } from 'multer';
-import { DiningRestaurantCreateProps, PopularDishesData } from './interface';
+import { Op } from 'sequelize';
+import Logging from 'utils/library/logging';
+import {
+    DiningRestaurantCreateProps,
+    DiningRestaurantSearchInputProps,
+    PopularDishesData,
+} from './interface';
 
 class DiningRestaurantService {
     public async create(data: DiningRestaurantCreateProps, req: Request) {
@@ -59,12 +65,19 @@ class DiningRestaurantService {
         }
     }
 
-    public findAll() {
+    public search(input?: DiningRestaurantSearchInputProps) {
+        const { searchText } = { ...input };
+
         try {
-            const nodes = DiningRestaurantModel.findAll({
-                include: DiningImagesModel,
+            const response = DiningRestaurantModel.findAndCountAll({
+                where: {
+                    restaurantName: {
+                        [Op.like]: `%${searchText}%`,
+                    },
+                },
+                include: [DiningImagesModel],
             });
-            return nodes;
+            return response;
         } catch (error) {
             throw new Error(
                 '❌ Some error occurred while retrieving Dining Restaurant'
@@ -74,15 +87,12 @@ class DiningRestaurantService {
 
     public async updateDishes(data: PopularDishesData) {
         try {
-            const popularDishesString = data.popularDishes.toString();
+            const { popularDishes, id } = data;
             const response = await DiningRestaurantModel.update(
-                { popularDishes: popularDishesString },
-                {
-                    where: {
-                        id: data.id,
-                    },
-                }
+                { popularDishes },
+                { where: { id } }
             );
+            return response;
         } catch (error) {}
     }
 }

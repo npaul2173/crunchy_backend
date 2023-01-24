@@ -1,7 +1,12 @@
 import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import HttpException from 'utils/exception/http.exception';
-import { DiningRestaurantCreateProps, PopularDishesData } from './interface';
+import Logging from 'utils/library/logging';
+import {
+    DiningRestaurantCreateProps,
+    DiningRestaurantSearchInputProps,
+    PopularDishesData,
+} from './interface';
 import DiningRestaurantService from './service';
 
 class DiningRestaurantController {
@@ -28,6 +33,7 @@ class DiningRestaurantController {
             );
         }
     }
+
     public async updatePopularDishes(
         req: Request,
         res: Response,
@@ -36,10 +42,10 @@ class DiningRestaurantController {
         try {
             const service = new DiningRestaurantService();
             const { id, popularDishes } = { ...req.body } as PopularDishesData;
-            const response = await service.updateDishes({ id, popularDishes });
+            await service.updateDishes({ id, popularDishes });
             res.status(StatusCodes.OK).json({
                 status: true,
-                data: response,
+                message: 'Dishes updated',
             });
         } catch (error) {
             next(
@@ -51,17 +57,25 @@ class DiningRestaurantController {
         }
     }
 
-    public async getAll(_req: Request, res: Response, next: NextFunction) {
+    public async searchRestaurant(
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ) {
         const service = new DiningRestaurantService();
-
+        const input = req.body as DiningRestaurantSearchInputProps;
         try {
-            const nodes = await service.findAll();
-            res.status(StatusCodes.OK).json({ nodes });
+            const response = await service.search(input);
+            res.status(StatusCodes.OK).json({
+                status: true,
+                // input,
+                response: { count: response.count, nodes: response.rows },
+            });
         } catch (error) {
             next(
                 new HttpException(
                     StatusCodes.BAD_REQUEST,
-                    '❌ Unable to retrieve partners'
+                    '❌ Unable to retrieve Dining Restaurant'
                 )
             );
         }

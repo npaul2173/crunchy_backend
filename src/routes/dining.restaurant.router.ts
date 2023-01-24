@@ -4,7 +4,10 @@ import { validate } from 'utils/library/validate';
 import os from 'os';
 import { BaseRoute } from 'utils/library/utils';
 import DiningRestaurantController from 'controllers/Dining/Restaurants';
-import { createDiningRestaurantValidationSchema } from 'models/Dining/DiningRestaurants/validation';
+import {
+    createDiningRestaurantValidationSchema,
+    updatePopularDishesValidationSchema,
+} from 'controllers/Dining/Restaurants/validation';
 import { validateMultipleImage } from 'controllers/upload/validate';
 
 const router = Router();
@@ -23,18 +26,15 @@ router.post(
     controller.createDiningRestaurant
 );
 
-// router.post(
-//     bRoute.getRoute('/stats'),
-//     upload.single('uploaded_file'),
-//     function (req, res) {
-//         res.status(StatusCodes.OK).send({
-//             message: 'Received',
-//             file: req.file?.mimetype,
-//         });
-//     }
-// );
-
 // GET ALL CUISINES
-router.get(bRoute.getRoute('/'), controller.getAll);
+router.post(bRoute.getRoute('/list'), controller.searchRestaurant);
+
+// UPDATE POPULAR DISHES
+router.post(
+    bRoute.getRoute('/updateDishes'),
+    updatePopularDishesValidationSchema,
+    validate,
+    controller.updatePopularDishes
+);
 
 export { router as diningRestaurantRoutes };

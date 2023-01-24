@@ -22,7 +22,7 @@ export const DiningRestaurantModel = sequel.define(
         pocketPinch: { type: DataTypes.STRING },
         contactNumber: { type: DataTypes.STRING },
         alternateContact: { type: DataTypes.STRING },
-        popularDishes: { type: DataTypes.STRING },
+        popularDishes: { type: DataTypes.ARRAY(DataTypes.STRING) },
         features: { type: DataTypes.STRING },
         menu: { type: DataTypes.STRING },
     },
