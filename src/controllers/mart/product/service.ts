@@ -1,9 +1,11 @@
 import { CategoryModel } from 'models/mart/category/model';
+import { GetProductProps } from 'models/mart/product/interface';
 import {
     DerivedProductModel,
     ProductImageModel,
     ProductModel,
 } from 'models/mart/product/model';
+import { Op } from 'sequelize';
 import Logging from 'utils/library/logging';
 import { ProductCreateProps } from './interface';
 
@@ -65,9 +67,15 @@ class ProductService {
             throw new Error('❌ Unable to create 🖊️ product');
         }
     }
-    public findAll() {
+    public findAll(data: GetProductProps) {
         try {
+            Logging.info(data);
             const nodes = ProductModel.findAll({
+                where: {
+                    productName: {
+                        [Op.iLike]: `%${data.productName.toLowerCase()}%`,
+                    },
+                },
                 include: [
                     { model: DerivedProductModel },
                     { model: ProductImageModel, attributes: ['images'] },

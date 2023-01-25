@@ -1,8 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { Model } from 'sequelize';
+import { GetProductProps } from 'models/mart/product/interface';
 import HttpException from 'utils/exception/http.exception';
-import Logging from 'utils/library/logging';
 import { ProductCreateProps } from './interface';
 import ProductService from './service';
 
@@ -49,8 +48,9 @@ const getAllProducts = async (
     next: NextFunction
 ) => {
     const productService = new ProductService();
+    const inputData = _req.body as GetProductProps;
     try {
-        const response = await productService.findAll();
+        const response = await productService.findAll(inputData);
         res.status(StatusCodes.OK).json({ status: true, nodes: response });
     } catch (error) {
         next(

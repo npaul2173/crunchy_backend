@@ -30,4 +30,11 @@ const createProductValidationSchema = [
         .optional(),
 ];
 
-export { createProductValidationSchema };
+const getProductValidationSchema = [
+    body('productName')
+        .isString()
+        .withMessage('Product name should be a string')
+        .optional(),
+];
+
+export { createProductValidationSchema, getProductValidationSchema };

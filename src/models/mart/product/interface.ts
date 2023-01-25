@@ -8,4 +8,8 @@ interface ProductProps {
     images: string[];
 }
 
-export { ProductProps };
+interface GetProductProps {
+    productName: String;
+}
+
+export { ProductProps, GetProductProps };

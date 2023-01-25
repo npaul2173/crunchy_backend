@@ -1,5 +1,8 @@
 import { createProduct, getAllProducts } from 'controllers/mart/product';
-import { createProductValidationSchema } from 'controllers/mart/product/validation';
+import {
+    createProductValidationSchema,
+    getProductValidationSchema,
+} from 'controllers/mart/product/validation';
 import { Router } from 'express';
 import { validate } from 'utils/library/validate';
 
@@ -14,6 +17,11 @@ router.post(
     createProduct
 );
 
-router.get(getRoute('/'), getAllProducts);
+router.post(
+    getRoute('/'),
+    getProductValidationSchema,
+    validate,
+    getAllProducts
+);
 
 export { router as productRoutes };
