@@ -1,5 +1,5 @@
-import { CategoryModel } from 'models/category/model';
-import { DerivedProductModel, ProductModel } from 'models/product/model';
+import { CategoryModel } from 'models/mart/category/model';
+import { DerivedProductModel, ProductModel } from 'models/mart/product/model';
 import { CategoryCreateProps } from './interface';
 
 class CategoryService {
@@ -14,11 +14,7 @@ class CategoryService {
                         ...data,
                     },
                 });
-            if (created) {
-                return categoryResponse;
-            } else {
-                return false;
-            }
+            return { categoryResponse, created };
         } catch (err) {
             throw new Error('❌ Unable to create 🖊️ category');
         }

@@ -12,11 +12,13 @@ const createCategory = async (
     const categoryService = new CategoryService();
     try {
         const inputData = req.body as CategoryCreateProps;
-        const response = await categoryService.create(inputData);
-        if (response) {
+        const { categoryResponse, created } = await categoryService.create(
+            inputData
+        );
+        if (created) {
             res.status(StatusCodes.CREATED).json({
                 success: true,
-                data: response,
+                data: categoryResponse,
             });
         } else {
             res.status(StatusCodes.CONFLICT).json({

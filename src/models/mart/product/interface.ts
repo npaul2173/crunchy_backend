@@ -5,6 +5,11 @@ interface ProductProps {
     price: Number;
     quantity?: Number;
     categoryId: Number;
+    images: string[];
 }
 
-export { ProductProps };
+interface GetProductProps {
+    productName: String;
+}
+
+export { ProductProps, GetProductProps };

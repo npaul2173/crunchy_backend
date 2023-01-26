@@ -1,5 +1,11 @@
-import { CategoryModel } from 'models/category/model';
-import { DerivedProductModel, ProductModel } from 'models/product/model';
+import { CategoryModel } from 'models/mart/category/model';
+import { GetProductProps } from 'models/mart/product/interface';
+import {
+    DerivedProductModel,
+    ProductImageModel,
+    ProductModel,
+} from 'models/mart/product/model';
+import { Op } from 'sequelize';
 import Logging from 'utils/library/logging';
 import { ProductCreateProps } from './interface';
 
@@ -14,12 +20,23 @@ class ProductService {
                     where: {
                         productName: data.productName,
                     },
-                    defaults: {
-                        ...data,
-                    },
+                    defaults: { ...data, images: undefined },
                 });
+                Logging.info(product);
+                Logging.info(created);
+
                 if (created) {
-                    return product;
+                    const imageResponse = await ProductImageModel.create({
+                        images: data.images,
+                        productId: product.dataValues.id,
+                    });
+
+                    Logging.info(imageResponse);
+                    product;
+                    return {
+                        ...product.dataValues,
+                        images: imageResponse.dataValues.images,
+                    };
                 } else if (
                     product.dataValues.price !== data.price &&
                     product.dataValues.price !== data.quantity
@@ -50,10 +67,19 @@ class ProductService {
             throw new Error('❌ Unable to create 🖊️ product');
         }
     }
-    public findAll() {
+    public findAll(data: GetProductProps) {
         try {
+            Logging.info(data);
             const nodes = ProductModel.findAll({
-                include: [DerivedProductModel],
+                where: {
+                    productName: {
+                        [Op.iLike]: `%${data.productName.toLowerCase()}%`,
+                    },
+                },
+                include: [
+                    { model: DerivedProductModel },
+                    { model: ProductImageModel, attributes: ['images'] },
+                ],
             });
             return nodes;
         } catch (error) {

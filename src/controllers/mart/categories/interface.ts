@@ -1,4 +1,4 @@
-import { CategoryProps } from 'models/category/interface';
+import { CategoryProps } from 'models/mart/category/interface';
 
 type CategoryCreateProps = Omit<CategoryProps, 'id'>;
 
