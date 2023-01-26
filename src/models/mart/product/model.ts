@@ -1,4 +1,3 @@
-import { allow } from 'joi';
 import { DataTypes } from 'sequelize';
 import { sequel } from '../..';
 
@@ -16,7 +15,6 @@ export const ProductModel = sequel.define(
         price: { type: DataTypes.FLOAT, allowNull: false },
         description: { type: DataTypes.STRING },
         categoryId: { type: DataTypes.INTEGER },
-        // relatableProduct: { type: DataTypes.INTEGER }
     },
     { timestamps: true, paranoid: true, deletedAt: 'softDelete' }
 );

@@ -22,7 +22,6 @@ const createProductValidationSchema = [
         .custom((images) =>
             images.every((image: string) => typeof image === 'string')
         )
-        .withMessage('Should be a number')
         .withMessage('Should be array of string'),
     body('description')
         .isString()
