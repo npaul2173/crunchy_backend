@@ -9,8 +9,6 @@ const bRoute = new BaseRoute('categories');
 const create = bRoute.getRoute('/create');
 const getAll = bRoute.getRoute('/');
 
-console.log({ create });
-
 //Create CATEGORY
 router.post(create, createCategoryValidationSchema, validate, createCategory);
 
