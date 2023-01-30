@@ -3,11 +3,11 @@ import multer from 'multer';
 import { validate } from 'utils/library/validate';
 import os from 'os';
 import { BaseRoute } from 'utils/library/utils';
-import DiningRestaurantController from 'controllers/Dining/Restaurants';
+import DiningRestaurantController from 'controllers/dining/Restaurants';
 import {
     createDiningRestaurantValidationSchema,
     updatePopularDishesValidationSchema,
-} from 'controllers/Dining/Restaurants/validation';
+} from 'controllers/dining/Restaurants/validation';
 import { validateMultipleImage } from 'controllers/upload/validate';
 
 const router = Router();

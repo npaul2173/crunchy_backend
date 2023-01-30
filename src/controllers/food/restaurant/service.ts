@@ -1,4 +1,4 @@
-import { RestaurantModel } from 'models/restaurant/model';
+import { RestaurantModel } from 'models/food/restaurant/model';
 import { RestaurantCreateProps } from './interface';
 
 class RestaurantService {

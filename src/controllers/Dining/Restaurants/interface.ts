@@ -1,4 +1,4 @@
-import { DiningRestaurantProps } from 'models/Dining/DiningRestaurants/interface';
+import { DiningRestaurantProps } from 'models/dining/DiningRestaurants/interface';
 
 type DiningRestaurantCreateProps = Omit<DiningRestaurantProps, 'id'>;
 

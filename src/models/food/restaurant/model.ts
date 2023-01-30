@@ -1,5 +1,5 @@
 import { DataTypes } from 'sequelize';
-import { sequel } from '..';
+import { sequel } from '../..';
 
 const MODEL_NAME: string = 'restaurant';
 export const RestaurantModel = sequel.define(

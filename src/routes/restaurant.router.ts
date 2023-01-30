@@ -2,8 +2,8 @@ import {
     createRestaurant,
     deleteRestaurant,
     getAllRestaurants,
-} from 'controllers/restaurant';
-import { createRestaurantValidationSchema } from 'controllers/restaurant/validation';
+} from 'controllers/food/restaurant';
+import { createRestaurantValidationSchema } from 'controllers/food/restaurant/validation';
 import { Router } from 'express';
 import { validate } from 'utils/library/validate';
 
