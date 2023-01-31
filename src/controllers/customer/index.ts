@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
+import { CustomerModel } from 'models/customer/model';
 import HttpException from 'utils/exception/http.exception';
+import { JsonResponse } from 'utils/interfaces';
 import { CustomerCreateProps } from './interface';
 import CustomerService from './service';
 
@@ -23,6 +25,25 @@ const createCustomer = async (
     }
 };
 
+const checkMobileAlreadyExists = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    const { phone } = { ...req.body } as { phone: string };
+    const response = await CustomerModel.findOne({
+        where: { phone },
+    });
+
+    if (response) {
+        const response: JsonResponse = {
+            status: false,
+            message: 'User already exists with this Phone number',
+        };
+        res.status(StatusCodes.CONFLICT).json(response);
+    } else next();
+};
+
 const getAllCustomers = async (
     _req: Request,
     res: Response,
@@ -41,4 +62,4 @@ const getAllCustomers = async (
         );
     }
 };
-export { createCustomer, getAllCustomers };
+export { createCustomer, getAllCustomers, checkMobileAlreadyExists };

@@ -16,8 +16,6 @@ const bulCreate = bRoute.getRoute('/bulkCreate');
 const getAll = bRoute.getRoute('/');
 const deleteSingle = bRoute.getRoute('/delete');
 
-console.log('bRoute ----> \n\n\n', { bRoute });
-
 // CREATE CUSTOMER
 router.post(
     create,

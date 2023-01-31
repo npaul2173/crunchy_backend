@@ -7,7 +7,12 @@ import { CustomerCreateProps } from './interface';
 class CustomerService {
     public async create(data: CustomerCreateProps) {
         try {
-            const customerResponse = CustomerModel.create(data);
+            const inputData = {
+                ...data,
+                isEmailVerified: false,
+                isPhoneVerified: false,
+            } as CustomerCreateProps;
+            const customerResponse = CustomerModel.create(inputData);
             return customerResponse;
         } catch (error) {
             throw new Error('❌ Unable to create 🖊️ user ');
@@ -24,25 +29,6 @@ class CustomerService {
             );
         }
     }
-
-    public checkMobileAlreadyExists = async (
-        req: Request,
-        res: Response,
-        next: NextFunction
-    ) => {
-        const { phone } = { ...req.body } as { phone: string };
-        const response = await CustomerModel.findOne({
-            where: { phone },
-        });
-
-        if (response) {
-            const response: JsonResponse = {
-                status: false,
-                message: 'User already exists with this Phone number',
-            };
-            res.status(StatusCodes.CONFLICT).json(response);
-        } else next();
-    };
 }
 
 export default CustomerService;
