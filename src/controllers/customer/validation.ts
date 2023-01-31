@@ -5,13 +5,10 @@ const requiredValidation = (column: string, name: string) => {
 };
 
 const createCustomerValidationSchema = [
-    requiredValidation('name', 'Name')
-        .isLength({ min: 2 })
-        .withMessage('Minimum two characters required'),
     requiredValidation('phone', 'Phone number')
         .isLength({ min: 10 })
         .withMessage('Minimum 10 characters required'),
-    body('email').isEmail(),
+    requiredValidation('otp', 'OTP'),
 ];
 
 export { createCustomerValidationSchema };

@@ -1,4 +1,7 @@
+import { NextFunction, Request, Response } from 'express';
+import { StatusCodes } from 'http-status-codes';
 import { CustomerModel } from 'models/customer/model';
+import { JsonResponse } from 'utils/interfaces';
 import { CustomerCreateProps } from './interface';
 
 class CustomerService {
@@ -21,6 +24,25 @@ class CustomerService {
             );
         }
     }
+
+    public checkMobileAlreadyExists = async (
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ) => {
+        const { phone } = { ...req.body } as { phone: string };
+        const response = await CustomerModel.findOne({
+            where: { phone },
+        });
+
+        if (response) {
+            const response: JsonResponse = {
+                status: false,
+                message: 'User already exists with this Phone number',
+            };
+            res.status(StatusCodes.CONFLICT).json(response);
+        } else next();
+    };
 }
 
 export default CustomerService;
