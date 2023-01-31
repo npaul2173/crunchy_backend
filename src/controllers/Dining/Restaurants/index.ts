@@ -56,7 +56,7 @@ class DiningRestaurantController {
             );
         }
     }
-
+    // Search Restaurant
     public async searchRestaurant(
         req: Request,
         res: Response,
