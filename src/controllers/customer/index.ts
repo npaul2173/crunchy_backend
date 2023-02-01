@@ -5,19 +5,39 @@ import HttpException from 'utils/exception/http.exception';
 import { JsonResponse } from 'utils/interfaces';
 import { CustomerCreateProps } from './interface';
 import CustomerService from './service';
+import jwt from 'jsonwebtoken';
 
-// Create and Save a new Tutorial
-const createCustomer = async (
+const loginRegisterCustomer = async (
     req: Request,
     res: Response,
     next: NextFunction
 ) => {
-    const customerService = new CustomerService();
-
     try {
+        const customerService = new CustomerService();
+
         const inputData = req.body as CustomerCreateProps;
-        const response = await customerService.create(inputData);
-        res.status(StatusCodes.CREATED).json({ data: response });
+        const { response, created } = await customerService.create(inputData);
+
+        if (inputData.otp === '123456') {
+            const token = jwt.sign(
+                { id: response.dataValues.id },
+                process.env.SECRET_KEY_AUTH!,
+                {
+                    expiresIn: 86400, // 24 hours
+                }
+            );
+
+            res.status(StatusCodes.ACCEPTED).json({
+                status: true,
+                message: 'Login Successful',
+                data: { token, response, created },
+            } as JsonResponse);
+        } else {
+            res.status(StatusCodes.ACCEPTED).json({
+                status: false,
+                message: 'Invalid OTP was entered',
+            } as JsonResponse);
+        }
     } catch (error) {
         next(
             new HttpException(StatusCodes.BAD_REQUEST, '❌ Cannot Create User')
@@ -25,11 +45,31 @@ const createCustomer = async (
     }
 };
 
-const checkMobileAlreadyExists = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-) => {
+const verifyToken = async (req: Request, res: Response, next: NextFunction) => {
+    let { authorization } = req.headers;
+
+    const bearer = authorization?.split(' ');
+
+    if (bearer) {
+        const bearerToken = bearer?.[1];
+
+        jwt.verify(bearerToken, process.env.SECRET_KEY_AUTH!, (err) => {
+            if (err) {
+                return res.status(401).send({
+                    message: 'Unauthorized!',
+                });
+            }
+            next();
+        });
+    } else {
+        res.status(StatusCodes.FORBIDDEN).json({
+            status: false,
+            message: 'Token not provided',
+        } as JsonResponse);
+    }
+};
+
+const checkMobileAlreadyExists = async (req: Request, res: Response) => {
     const { phone } = { ...req.body } as { phone: string };
     const response = await CustomerModel.findOne({
         where: { phone },
@@ -37,11 +77,17 @@ const checkMobileAlreadyExists = async (
 
     if (response) {
         const response: JsonResponse = {
-            status: false,
-            message: 'User already exists with this Phone number',
+            status: true,
+            message: 'User exists',
         };
-        res.status(StatusCodes.CONFLICT).json(response);
-    } else next();
+        res.status(StatusCodes.OK).json(response);
+    } else {
+        const response: JsonResponse = {
+            status: false,
+            message: 'No user with this Phone number',
+        };
+        res.status(StatusCodes.OK).json(response);
+    }
 };
 
 const getAllCustomers = async (
@@ -62,4 +108,9 @@ const getAllCustomers = async (
         );
     }
 };
-export { createCustomer, getAllCustomers, checkMobileAlreadyExists };
+export {
+    getAllCustomers,
+    checkMobileAlreadyExists,
+    loginRegisterCustomer,
+    verifyToken,
+};

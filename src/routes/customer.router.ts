@@ -1,24 +1,38 @@
 import {
     checkMobileAlreadyExists,
-    createCustomer,
     getAllCustomers,
+    loginRegisterCustomer,
+    verifyToken,
 } from 'controllers/customer';
-import { createCustomerValidationSchema } from 'controllers/customer/validation';
+import {
+    checkCustomerVSchema,
+    createCustomerVSchema,
+} from 'controllers/customer/validation';
 import { Router } from 'express';
 import { BaseRoute } from 'utils/library/utils';
 import { validate } from 'utils/library/validate';
 
 const router = Router();
 const bRoute = new BaseRoute('customers');
+
 // CREATE CUSTOMER
 router.post(
-    bRoute.getRoute('/create'),
-    createCustomerValidationSchema,
+    bRoute.getRoute('/login'),
+    createCustomerVSchema,
     validate,
-    checkMobileAlreadyExists,
-    createCustomer
+    loginRegisterCustomer
 );
 
+// Verify user token
+router.post(bRoute.getRoute('/authorize'), verifyToken);
+
+// Check if customer already exists
+router.post(
+    bRoute.getRoute('/checkCustomer'),
+    checkCustomerVSchema,
+    validate,
+    checkMobileAlreadyExists
+);
 // GET ALL CUSTOMERS
 router.get(bRoute.getRoute('/'), getAllCustomers);
 

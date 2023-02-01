@@ -7,13 +7,26 @@ import { CustomerCreateProps } from './interface';
 class CustomerService {
     public async create(data: CustomerCreateProps) {
         try {
+            // const [customerResponse, created] =
+            // await CuisinesModel.findOrCreate({
+            //     where: {
+            //         cuisineName: data.cuisineName,
+            //     },
+            //     defaults: { ...data },
+            // });
+
             const inputData = {
                 ...data,
                 isEmailVerified: false,
-                isPhoneVerified: false,
+                isPhoneVerified: true,
             } as CustomerCreateProps;
-            const customerResponse = CustomerModel.create(inputData);
-            return customerResponse;
+            const [response, created] = await CustomerModel.findOrCreate({
+                defaults: inputData,
+                where: {
+                    phone: data.phone,
+                },
+            });
+            return { created, response };
         } catch (error) {
             throw new Error('❌ Unable to create 🖊️ user ');
         }

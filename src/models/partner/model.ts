@@ -32,6 +32,9 @@ export const PartnerModel = sequel.define(
         roleId: {
             type: DataTypes.INTEGER,
         },
+        password: {
+            type: DataTypes.STRING,
+        },
     },
     {
         timestamps: true,
