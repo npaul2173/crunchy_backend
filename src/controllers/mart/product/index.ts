@@ -1,4 +1,6 @@
+import { parse } from 'csv-parse';
 import { NextFunction, Request, Response } from 'express';
+import fs from 'fs';
 import { StatusCodes } from 'http-status-codes';
 import { GetProductProps } from 'models/mart/product/interface';
 import HttpException from 'utils/exception/http.exception';
@@ -57,6 +59,44 @@ const getAllProducts = async (
             new HttpException(
                 StatusCodes.BAD_REQUEST,
                 '❌ Unable to retrieve products'
+            )
+        );
+    }
+};
+
+const createBulkProduct = async (
+    _req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    const productService = new ProductService();
+    try {
+        let dataArray: ProductCreateProps[] = [];
+        const readableStream = fs.createReadStream(_req.file?.path!);
+        readableStream
+            .pipe(parse({ from_line: 2 }))
+            .on('data', async (item) => {
+                dataArray.push({
+                    productName: item[0],
+                    description: item[1],
+                    price: item[2],
+                    quantity: item[3],
+                    categoryId: item[4],
+                    images: item[5],
+                });
+            })
+            .on('end', async () => {
+                const response = await productService.createMultiple(dataArray);
+                res.status(StatusCodes.CREATED);
+            })
+            .on('error', (error) => {
+                res.status(StatusCodes.INTERNAL_SERVER_ERROR);
+            });
+    } catch (error) {
+        next(
+            new HttpException(
+                StatusCodes.BAD_REQUEST,
+                '❌ Cannot Create Products'
             )
         );
     }

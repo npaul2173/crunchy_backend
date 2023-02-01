@@ -67,6 +67,16 @@ class ProductService {
             throw new Error('❌ Unable to create 🖊️ product');
         }
     }
+
+    public async createMultiple(data: ProductCreateProps[]) {
+        try {
+            const productResponse = ProductModel.bulkCreate(data);
+            return productResponse;
+        } catch (error) {
+            throw new Error('❌ Unable to create 🖊️ products');
+        }
+    }
+
     public findAll(data: GetProductProps) {
         try {
             Logging.info(data);
