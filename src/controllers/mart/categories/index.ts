@@ -1,8 +1,12 @@
+import { CuisineCreateProps } from 'controllers/cuisine/interface';
 import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import HttpException from 'utils/exception/http.exception';
 import { CategoryCreateProps } from './interface';
 import CategoryService from './service';
+import fs from 'fs';
+import { parse } from 'csv-parse';
+import Logging from 'utils/library/logging';
 
 const createCategory = async (
     req: Request,
@@ -55,4 +59,42 @@ const getAllCategories = async (
     }
 };
 
-export { createCategory, getAllCategories };
+const categoryBulkCreate = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    const categoryService = new CategoryService();
+    try {
+        let dataArray: CategoryCreateProps[] = [];
+        const readableStream = fs.createReadStream(req.file?.path!);
+        readableStream
+            .pipe(parse({ delimiter: ',', from_line: 2 }))
+            .on('data', async (item) => {
+                dataArray.push({
+                    categoryName: item[0],
+                    description: item[1],
+                    count: item[2],
+                    image: item[3],
+                });
+            })
+            .on('end', async () => {
+                const response = await categoryService.createMultiple(
+                    dataArray
+                );
+                res.status(StatusCodes.CREATED).json({ data: response });
+            })
+            .on('error', (error) => {
+                Logging.error(error.message);
+            });
+    } catch (error) {
+        next(
+            new HttpException(
+                StatusCodes.BAD_REQUEST,
+                '❌ Cannot Create Category'
+            )
+        );
+    }
+};
+
+export { createCategory, getAllCategories, categoryBulkCreate };

@@ -33,6 +33,14 @@ class CategoryService {
             );
         }
     }
+    public async createMultiple(data: CategoryCreateProps[]) {
+        try {
+            const categoryResponse = CategoryModel.bulkCreate(data);
+            return categoryResponse;
+        } catch (error) {
+            throw new Error('❌ Unable to create 🖊️ category');
+        }
+    }
 }
 
 export default CategoryService;
