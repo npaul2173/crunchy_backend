@@ -1,9 +1,9 @@
 import { DataTypes } from 'sequelize';
 import { sequel } from '../..';
 
-const MODEL_NAME: string = 'restaurant';
+export const RESTAURANT_MODEL: string = 'restaurant';
 export const RestaurantModel = sequel.define(
-    MODEL_NAME,
+    RESTAURANT_MODEL,
     {
         id: {
             type: DataTypes.INTEGER,
@@ -29,9 +29,6 @@ export const RestaurantModel = sequel.define(
             type: DataTypes.STRING,
         },
         restaurantType: {
-            type: DataTypes.STRING,
-        },
-        cuisineType: {
             type: DataTypes.STRING,
         },
         invoiceEmail: {

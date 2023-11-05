@@ -9,6 +9,12 @@ const createRestaurant = async (
     res: Response,
     next: NextFunction
 ) => {
+    console.log(req.body);
+
+    // res.status(StatusCodes.CREATED).json({
+    //     statusCode: StatusCodes.CREATED,
+    //     message: 'Restaurant created successfully!',
+    // });
     const restaurantService = new RestaurantService();
     try {
         const inputData = req.body as RestaurantCreateProps;

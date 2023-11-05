@@ -1,10 +1,20 @@
+import { CuisinesModel } from 'models/cuisine/model';
 import { RestaurantModel } from 'models/food/restaurant/model';
+import { restaurantCuisinesModel } from 'models/food/restaurant/restaurantCuisines/model';
 import { RestaurantCreateProps } from './interface';
 
 class RestaurantService {
     public async create(data: RestaurantCreateProps) {
         try {
-            const restaurantResponse = RestaurantModel.create(data);
+            const restaurantResponse = RestaurantModel.create({
+                ...data,
+            });
+
+            await restaurantCuisinesModel.create({
+                restaurantId: (await restaurantResponse).dataValues.id,
+                cuisineId: data.cuisineId,
+            });
+
             return restaurantResponse;
         } catch (error) {
             throw new Error('❌ Unable to create 🖊️ restaurant ');

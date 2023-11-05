@@ -7,7 +7,7 @@ interface RestaurantProps {
     duration: string;
     location: string;
     restaurantType: string;
-    cuisineType: string;
+    cuisineId: string;
     invoiceEmail: string;
     image: string;
 }

@@ -50,17 +50,28 @@ const verifyToken = async (req: Request, res: Response, next: NextFunction) => {
 
     const bearer = authorization?.split(' ');
 
+    console.log('auth -->', authorization);
+
     if (bearer) {
         const bearerToken = bearer?.[1];
 
-        jwt.verify(bearerToken, process.env.SECRET_KEY_AUTH!, (err) => {
-            if (err) {
-                return res.status(401).send({
-                    message: 'Unauthorized!',
-                });
-            }
-            next();
-        });
+        try {
+            jwt.verify(bearerToken, process.env.SECRET_KEY_AUTH!, (err) => {
+                if (err) {
+                    return res.status(401).send({
+                        message: 'Unauthorized!',
+                    });
+                }
+                next();
+            });
+        } catch (error) {
+            next(
+                new HttpException(
+                    StatusCodes.BAD_REQUEST,
+                    '❌ Unable to authorize customer'
+                )
+            );
+        }
     } else {
         res.status(StatusCodes.FORBIDDEN).json({
             status: false,

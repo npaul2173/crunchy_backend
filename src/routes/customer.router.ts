@@ -9,6 +9,7 @@ import {
     createCustomerVSchema,
 } from 'controllers/customer/validation';
 import { Router } from 'express';
+import { StatusCodes } from 'http-status-codes';
 import { BaseRoute } from 'utils/library/utils';
 import { validate } from 'utils/library/validate';
 
@@ -24,7 +25,11 @@ router.post(
 );
 
 // Verify user token
-router.post(bRoute.getRoute('/authorize'), verifyToken);
+router.post(bRoute.getRoute('/authorize'), verifyToken, (_req, res) =>
+    res
+        .status(StatusCodes.OK)
+        .json({ status: true, message: 'Token authorized' })
+);
 
 // Check if customer already exists
 router.post(

@@ -11,7 +11,7 @@ const createRestaurantValidationSchema = [
     requiredValidation('restaurantType', 'Restaurant type').withMessage(
         'Minimum 5 characters required'
     ),
-    requiredValidation('rating', 'Restaurant type').withMessage(
+    requiredValidation('rating', 'Rating').withMessage(
         'Minimum 5 characters required'
     ),
     body('invoiceEmail').isEmail(),
